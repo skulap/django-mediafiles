@@ -10,5 +10,8 @@ build
 dist
 *.egg-info
 
+# compiled locales
+*.mo
+
 # Other
 .pipyrc

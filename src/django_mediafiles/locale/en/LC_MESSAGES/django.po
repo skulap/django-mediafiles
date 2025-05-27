@@ -1,0 +1,86 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+
+#: .\apps.py:10
+msgid "Медиафайлы"
+msgstr "Mediafiles"
+
+#: .\models.py:29
+msgid "MIME"
+msgstr "MIME"
+
+#: .\models.py:34 .\models.py:61
+msgid "Файл"
+msgstr "File"
+
+#: .\models.py:39
+msgid "В обработке"
+msgstr "In processing"
+
+#: .\models.py:40
+msgid "Обрабатывается"
+msgstr "Processing"
+
+#: .\models.py:41
+msgid "Успешно"
+msgstr "Success"
+
+#: .\models.py:42
+msgid "Ошибка"
+msgstr "Error"
+
+#: .\models.py:62
+msgid "Файлы"
+msgstr "Files"
+
+#: .\models.py:95 .\models.py:142
+msgid "Ширина"
+msgstr "Width"
+
+#: .\models.py:96 .\models.py:143
+msgid "Высота"
+msgstr "Height"
+
+#: .\models.py:97
+msgid "Миниатюра"
+msgstr "Thumbnail"
+
+#: .\models.py:105
+msgid "Размер миниатюры"
+msgstr "Thumbnail size"
+
+#: .\models.py:109
+msgid "Изображение"
+msgstr "Image"
+
+#: .\models.py:110
+msgid "Изображения"
+msgstr "Images"
+
+#: .\models.py:135
+msgid "Длительность"
+msgstr "Duration"
+
+#: .\models.py:139
+msgid "Превью"
+msgstr "Preview"
+
+#: .\models.py:146 .\models.py:147
+msgid "Видео"
+msgstr "Video"
+
+#: .\models.py:154
+msgid "Документ"
+msgstr "Document"
+
+#: .\models.py:155
+msgid "Документы"
+msgstr "Documents"
+
+#: .\validators.py:9
+#, python-format
+msgid "Файлы типа %(mimetype)s не поддерживаются."
+msgstr "Files of type %(mimetype)s are not supported."

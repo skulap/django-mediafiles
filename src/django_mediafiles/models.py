@@ -92,7 +92,7 @@ class ImageFile(File):
     allowed_types = ["image/*"]
     processor_class = ImageProcessor
 
-    width = models.PositiveIntegerField(null=True, editable=False, verbose_name=_("Широта"))
+    width = models.PositiveIntegerField(null=True, editable=False, verbose_name=_("Ширина"))
     height = models.PositiveIntegerField(null=True, editable=False, verbose_name=_("Высота"))
     thumbnail = models.ImageField(null=True, blank=True, editable=False, verbose_name=_("Миниатюра"))
 
