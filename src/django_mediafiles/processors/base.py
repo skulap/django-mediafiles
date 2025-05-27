@@ -81,20 +81,24 @@ class BaseProcessor(abc.ABC):
 
     def apply_changes(self):
         """Применение изменений к модели с защитой от рекурсии"""
-        if self._changes:
-            try:
-                update_fields = list(self._changes.keys())
+        self._changes.update({
+            "processing_status": "success"
+        })
 
-                self._media_file.processing_status = 'success'
-                update_fields.append('processing_status')
-                for field, value in self._changes.items():
-                    setattr(self._media_file, field, value)
+        try:
+            update_fields = list(self._changes.keys())
 
-                self._media_file.save(update_fields=update_fields)
-                self._logger.info(f"Applied changes: {', '.join(update_fields)}")
-            except Exception as e:
-                self._logger.error(f"Failed to apply changes: {str(e)}")
-                raise e
+            # self._media_file.processing_status = 'success'
+            # update_fields.append('processing_status')
+            # for field, value in self._changes.items():
+            #     setattr(self._media_file, field, value)
+
+            self._media_file._meta.model.objects.filter(pk=self._media_file.pk).update(**self._changes)
+            # self._media_file.save(update_fields=update_fields)
+            self._logger.info(f"Applied changes: {', '.join(update_fields)}")
+        except Exception as e:
+            self._logger.error(f"Failed to apply changes: {str(e)}")
+            raise e
         self._cleanup_temp_files()
 
     @abc.abstractmethod

@@ -4,12 +4,12 @@ from .file import FileProcessor
 
 
 class ImageProcessor(FileProcessor):
-    def __init__(self, max_size=None, quality=85, thumbnail_size=(300, 300), *args, **kwargs):
+    def __init__(self, media_file, max_size=None, quality=85, thumbnail_size=(300, 300)):
         self._max_size = self._validate_max_size(max_size)
         self._compression_quality = self._validate_quality(quality)
         self._thumbnail_size = self._validate_thumbnail_size(thumbnail_size)
 
-        super().__init__(*args, **kwargs)
+        super().__init__(media_file)
 
     def _validate_max_size(self, max_size):
         if max_size and max_size < 1:
@@ -34,23 +34,28 @@ class ImageProcessor(FileProcessor):
 
         return thumbnail_size
 
-    def _resize_image(self, img):
+    def _resize_image(self, img: Image.Image):
         """Изменение размера изображения"""
         original_max = max(img.size)
         if original_max > self._max_size:
             aspect_ratio = float(img.size[0]) / float(img.size[1])
             if aspect_ratio > 1:
                 aspect_ratio = 1.0 / aspect_ratio
-                width, height = self._max_size
+                width = self._max_size
                 height = int(width * aspect_ratio)
             else:
                 height = self._max_size
                 width = int(height * aspect_ratio)
 
-            img.resize((width, height), Image.Resampling.LANCZOS)
+            _format = img.format
+            img = img.resize((width, height), Image.Resampling.LANCZOS)
+            img.format = _format
+
             self._logger.info(f"Resized to {(width, height)}")
 
-    def _compress_image(self, img):
+        return img
+
+    def _compress_image(self, img: Image.Image):
         """Сжатие изображения"""
         output = BytesIO()
         img.save(output, format=img.format, quality=self._compression_quality, optimize=True)
@@ -71,16 +76,17 @@ class ImageProcessor(FileProcessor):
         content = self._load_file_content()
         try:
             with Image.open(content) as img:
-                # Сохранение размеров
-                self._changes.update({
-                    'width': img.width,
-                    'height': img.height
-                })
 
                 self._logger.info(f'Start image file compressing...')
                 # Изменение размера
                 if self._max_size:
-                    self._resize_image(img)
+                    img = self._resize_image(img)
+
+                # Сохранение размеров
+                self._changes.update({
+                    'width': img.width,
+                    'height': img.height,
+                })
 
                 # Сжатие и сохранение
                 self._compress_image(img)

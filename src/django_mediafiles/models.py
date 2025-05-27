@@ -1,7 +1,5 @@
 import os
-import typing
 import uuid
-
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.translation import gettext_lazy as _
 from django.contrib.contenttypes.fields import GenericForeignKey
@@ -9,11 +7,13 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils.text import get_valid_filename
 from django_basemodels.managers import PolymorphicBaseModelQuerySet
+from django_basemodels.models import BaseModel
 from polymorphic.managers import PolymorphicManager
 from polymorphic.models import PolymorphicModel
 from .processors.file import FileProcessor
 from .processors.image import ImageProcessor
 from .processors.video import VideoProcessor
+from .validators import FileMimeTypeValidator
 
 
 def _upload_save_path(instance, filename):
@@ -23,16 +23,16 @@ def _upload_save_path(instance, filename):
     return path
 
 
-class File(PolymorphicModel):
+class File(BaseModel, PolymorphicModel):
     processor_class = FileProcessor
 
     mime_type = models.CharField(null=True, max_length=120, editable=False, verbose_name=_("MIME"))
     file = models.FileField(
         null=False, blank=False,
+        validators=[FileMimeTypeValidator()],
         upload_to=_upload_save_path,
         verbose_name=_("Файл")
     )
-    file_size = models.PositiveIntegerField(null=True, editable=False, verbose_name=_("Размер файла"))
     processing_status = models.CharField(
         max_length=20,
         choices=(
@@ -41,7 +41,7 @@ class File(PolymorphicModel):
             ('success', _("Успешно")),
             ('failed', _("Ошибка")),
         ),
-        default='waiting',
+        default='pending',
         null=False, blank=False,
         editable=False
     )
@@ -77,8 +77,7 @@ class File(PolymorphicModel):
 
     def save(self, *args, **kwargs):
         """Переопределение сохранения для обработки изменений файла"""
-        if self.file and self.file.name != self.__original_file_name:
-            self.file_size = self.file.size
+        if not self.pk or (self.file and self.file.name != self.__original_file_name):
             self.processing_status = 'pending'
 
         super().save(*args, **kwargs)

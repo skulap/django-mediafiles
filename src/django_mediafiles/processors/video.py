@@ -1,17 +1,17 @@
 import datetime
 import tempfile
-from src.django_mediafiles.processors.file import FileProcessor
+from .file import FileProcessor
 import ffmpeg
 
 
 class VideoProcessor(FileProcessor):
-    def __init__(self, preview_size=(854, 480), crf=28, preset='fast', **kwargs):
+    def __init__(self, media_file, preview_size=(854, 480), crf=28, preset='fast'):
         self.preview_size = preview_size
         self.crf = crf  # 0-51, где меньше - лучше качество
         self.preset = preset
         self._validate_params()
 
-        super().__init__(**kwargs)
+        super().__init__(media_file)
 
     def _validate_params(self):
         """Проверка параметров обработки видео"""
@@ -36,6 +36,8 @@ class VideoProcessor(FileProcessor):
 
                 probe = ffmpeg.probe(temp_in.name)
                 video_stream = next(s for s in probe['streams'] if s['codec_type'] == 'video')
+
+                print("PROBE", probe)
 
                 return {
                     'duration': float(probe['format']['duration']),
@@ -77,8 +79,7 @@ class VideoProcessor(FileProcessor):
 
                     # Склейка сегментов
                     if len(segments) > 1:
-                        video_streams = [s[0] for s in segments]
-                        video = ffmpeg.concat(*video_streams, v=1, a=0)
+                        video = ffmpeg.concat(*segments, v=1, a=0)
                     else:
                         video = segments[0]
 
@@ -116,7 +117,7 @@ class VideoProcessor(FileProcessor):
 
         # Обновление метаданных
         self._changes.update({
-            'duration': datetime.timedelta(metadata['duration']),
+            'duration': datetime.timedelta(seconds=metadata['duration']),
             'width': metadata['width'],
             'height': metadata['height']
         })

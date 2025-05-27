@@ -33,7 +33,7 @@ def enqueue_processing(sender, instance: File, created, **kwargs):
         celery_checker = CeleryHealthChecker.get_instance()
         if not celery_checker or not celery_checker.is_healthy():
             transaction.on_commit(
-                _local_file_process(instance, **processor_kwargs)
+                lambda: _local_file_process(instance, **processor_kwargs)
             )
         else:
             transaction.on_commit(

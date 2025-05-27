@@ -13,18 +13,22 @@ def process_file_task(file_pk: int, **processor_kwargs):
     except ObjectDoesNotExist:
         return
 
-    _local_file_process(obj, **processor_kwargs)
+    return _local_file_process(obj, **processor_kwargs)
 
 
 def _local_file_process(instance, **processor_kwargs):
-    processor = instance.processor_class(instance=instance, **processor_kwargs)
+    processor = instance.processor_class(media_file=instance, **processor_kwargs)
     try:
         processor.process()
         processor.apply_changes()
+
+        return "success"
     except Exception:
         File.objects.filter(
             pk=instance.pk
-        ).update(processing_status='failed')
+        ).update(processing_status="failed")
+
+        return "failed"
 
 
 
