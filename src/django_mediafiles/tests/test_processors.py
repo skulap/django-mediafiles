@@ -1,17 +1,12 @@
 import shutil
-import time
 from pathlib import Path
 
 import pytest
-from unittest.mock import MagicMock
-
-from PIL import Image
 from django.core.files import File as DjangoFile
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django_mediafiles.models import ImageFile, VideoFile, File
 from django_mediafiles.processors.image import ImageProcessor
 from django_mediafiles.processors.video import VideoProcessor
-from django_mediafiles.tasks import process_file_task
 
 
 @pytest.mark.django_db

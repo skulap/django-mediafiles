@@ -3,84 +3,97 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-05-28 12:13+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 
-#: .\apps.py:10
+#: src/django_mediafiles/apps.py:10
 msgid "Медиафайлы"
-msgstr "Mediafiles"
+msgstr "Media files"
 
-#: .\models.py:29
+#: src/django_mediafiles/models.py:29
 msgid "MIME"
 msgstr "MIME"
 
-#: .\models.py:34 .\models.py:61
+#: src/django_mediafiles/models.py:34 src/django_mediafiles/models.py:61
 msgid "Файл"
 msgstr "File"
 
-#: .\models.py:39
+#: src/django_mediafiles/models.py:39
 msgid "В обработке"
 msgstr "In processing"
 
-#: .\models.py:40
+#: src/django_mediafiles/models.py:40
 msgid "Обрабатывается"
 msgstr "Processing"
 
-#: .\models.py:41
+#: src/django_mediafiles/models.py:41
 msgid "Успешно"
 msgstr "Success"
 
-#: .\models.py:42
+#: src/django_mediafiles/models.py:42
 msgid "Ошибка"
-msgstr "Error"
+msgstr "Fail"
 
-#: .\models.py:62
+#: src/django_mediafiles/models.py:62
 msgid "Файлы"
 msgstr "Files"
 
-#: .\models.py:95 .\models.py:142
+#: src/django_mediafiles/models.py:95 src/django_mediafiles/models.py:142
 msgid "Ширина"
 msgstr "Width"
 
-#: .\models.py:96 .\models.py:143
+#: src/django_mediafiles/models.py:96 src/django_mediafiles/models.py:143
 msgid "Высота"
 msgstr "Height"
 
-#: .\models.py:97
+#: src/django_mediafiles/models.py:97
 msgid "Миниатюра"
 msgstr "Thumbnail"
 
-#: .\models.py:105
+#: src/django_mediafiles/models.py:105
 msgid "Размер миниатюры"
 msgstr "Thumbnail size"
 
-#: .\models.py:109
+#: src/django_mediafiles/models.py:109
 msgid "Изображение"
 msgstr "Image"
 
-#: .\models.py:110
+#: src/django_mediafiles/models.py:110
 msgid "Изображения"
 msgstr "Images"
 
-#: .\models.py:135
+#: src/django_mediafiles/models.py:135
 msgid "Длительность"
 msgstr "Duration"
 
-#: .\models.py:139
+#: src/django_mediafiles/models.py:139
 msgid "Превью"
 msgstr "Preview"
 
-#: .\models.py:146 .\models.py:147
+#: src/django_mediafiles/models.py:146 src/django_mediafiles/models.py:147
 msgid "Видео"
 msgstr "Video"
 
-#: .\models.py:154
+#: src/django_mediafiles/models.py:154
 msgid "Документ"
 msgstr "Document"
 
-#: .\models.py:155
+#: src/django_mediafiles/models.py:155
 msgid "Документы"
 msgstr "Documents"
 
-#: .\validators.py:9
+#: src/django_mediafiles/validators.py:9
 #, python-format
 msgid "Файлы типа %(mimetype)s не поддерживаются."
 msgstr "Files of type %(mimetype)s are not supported."

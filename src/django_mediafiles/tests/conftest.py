@@ -2,7 +2,6 @@ import pytest
 import django
 from django.conf import settings
 from django.db import connections
-from pytest_celery import CeleryTestWorker
 
 
 def pytest_configure():
